@@ -107,7 +107,7 @@ minecraft {
 }
 
 mixin {
-    add sourceSets.main, "mixins.${mod_id}.refmap.json"
+    add sourceSets.main, "${mod_id}.refmap.json"
     config "mixins.${mod_id}.vault_hunters.json"
 }
 

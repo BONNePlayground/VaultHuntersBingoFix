@@ -57,7 +57,7 @@ public class MixinBingoTask
                 if (task.getConfig().filter.test(PartialTile.of(ModBlocks.BARRED_TRAPDOOR.defaultBlockState())) ||
                     task.getConfig().filter.test(PartialTile.of(ModBlocks.BARRED_DOOR.defaultBlockState())))
                 {
-                    BingoFixMod.LOGGER.debug("Remove Task: " + task.getId() + " because cannot find village rooms in 20 room range!");
+                    BingoFixMod.LOGGER.debug("Remove Task: " + task.getId() + " because cannot find village rooms in vault!");
                     return true;
                 }
             }
@@ -71,7 +71,7 @@ public class MixinBingoTask
 
                     if (!found)
                     {
-                        BingoFixMod.LOGGER.debug("Remove Task: " + task.getId() + " because cannot find rooms that match its requirements in 20 room range!");
+                        BingoFixMod.LOGGER.debug("Remove Task: " + task.getId() + " because cannot find rooms that match its requirements in vault!");
                         return true;
                     }
                 }
