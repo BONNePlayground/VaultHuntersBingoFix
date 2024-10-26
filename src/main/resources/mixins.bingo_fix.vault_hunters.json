@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "lv.id.bonne.vaulthunters.bingofix.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "bingo_fix.refmap.json",
+  "mixins": [
+    "MixinBingoTask"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
