@@ -18,6 +18,9 @@ import iskallia.vault.core.vault.objective.BingoObjective;
 import iskallia.vault.task.counter.TargetTaskCounter;
 
 
+/**
+ * This mixin injects into code that adjust objective counter based on players joined the vault.
+ */
 @Mixin(value = BingoObjective.class, remap = false)
 public class MixinBingoObjective
 {

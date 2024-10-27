@@ -7,6 +7,7 @@
 package lv.id.bonne.vaulthunters.bingofix.util;
 
 
+import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +32,11 @@ import net.minecraft.resources.ResourceLocation;
 
 public class Util
 {
+    /**
+     * This method predicts vault rooms from given Vault object.
+     * @param vault The vault object that stores all information.
+     * @return List of vault rooms that are predicted to be inside vault.
+     */
     public static List<ResourceLocation> collectVaultRooms(Vault vault)
     {
         WorldManager worldManager = vault.get(Vault.WORLD);
@@ -70,7 +76,6 @@ public class Util
         boolean roomFound = true;
 
         // Continue while rooms are found in each completed ring
-
         while (roomFound)
         {
             roomFound = false;
@@ -84,6 +89,7 @@ public class Util
 
                 if (Math.abs(x) <= range && Math.abs(z) <= range)
                 {
+                    // Vault rooms are every 2 ring. Tunnels are in between.
                     RegionPos region = RegionPos.of(x << 1, z << 1, cellX, cellZ);
                     VaultLayout.PieceType type = layout.getType(vault, region);
 
@@ -96,6 +102,7 @@ public class Util
                             roomIDList.add(resourceLocation);
                         }
 
+                        // mark that there is room in ring.
                         roomFound = true;
                     }
                 }
@@ -122,19 +129,29 @@ public class Util
     }
 
 
-    static ResourceLocation processRegion(Vault vault,
+    /**
+     * This method returns room resource location that should be at given region position.
+     * @param vault The vault that stores information.
+     * @param gridLayout The grid layout for vault.
+     * @param region The room location.
+     * @return Room resource location or null.
+     */
+    @Nullable
+    private static ResourceLocation processRegion(Vault vault,
         ClassicVaultLayout gridLayout,
         RegionPos region)
     {
         ChunkRandom random = ChunkRandom.any();
-
+        // Change random to the vault seed and region location. Salt is same as in VH core.
         random.setRegionSeed(vault.get(Vault.SEED), region.getX(), region.getZ(), 1234567890L);
 
-        PlacementSettings settings = (new PlacementSettings(new ProcessorContext(vault, random))).setFlags(3);
+        PlacementSettings settings = new PlacementSettings(new ProcessorContext(vault, random)).setFlags(3);
+        // As we do not care about actual storing into cache, we just get the template.
         Template template = gridLayout.getTemplate(gridLayout.getType(vault, region), vault, region, random, settings);
 
         if (template instanceof JigsawTemplate jigsawTemplate)
         {
+            // I hope this will never crash :)
             return jigsawTemplate.getRoot().getKey().getId();
         }
         else

@@ -30,6 +30,9 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 
 
+/**
+ * This mixin removes impossible bingo tasks, and add limitation on how much they can be increased.
+ */
 @Mixin(value = BingoTask.class, remap = false)
 public class MixinBingoTask
 {
