@@ -167,8 +167,19 @@ public class MixinBingoTask
 
                 // Reload tag
                 BingoFixMod.LOGGER.debug("Change target counter for task.");
-                counter.readNbt(tag);
             }
+            else
+            {
+                BingoFixMod.LOGGER.debug("Add maxRooms variable.");
+            }
+
+            if (tag.contains("variables"))
+            {
+                CompoundTag variables = tag.getCompound("variables");
+                variables.putInt("maxRooms", roomCount);
+            }
+
+            counter.readNbt(tag);
         });
     }
 }

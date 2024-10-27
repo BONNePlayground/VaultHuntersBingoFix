@@ -83,6 +83,11 @@ minecraft {
             property 'forge.enabledGameTestNamespaces', mod_id
         }
 
+        client2 {
+            parent runs.client
+            args '--username=Dev2'
+        }
+
         server {
             workingDirectory = project.file('run/server')
             property 'forge.enabledGameTestNamespaces', mod_id
