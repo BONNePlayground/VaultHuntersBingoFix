@@ -17,6 +17,7 @@ import iskallia.vault.core.vault.Vault;
 import iskallia.vault.core.vault.WorldManager;
 import iskallia.vault.core.world.generator.GridGenerator;
 import iskallia.vault.core.world.generator.VaultGenerator;
+import iskallia.vault.core.world.generator.layout.ClassicInfiniteLayout;
 import iskallia.vault.core.world.generator.layout.ClassicVaultLayout;
 import iskallia.vault.core.world.generator.layout.GridLayout;
 import iskallia.vault.core.world.generator.layout.VaultLayout;
@@ -45,7 +46,11 @@ public class Util
         Integer cellZ = gridGenerator.get(GridGenerator.CELL_Z);
         GridLayout gridLayout = gridGenerator.get(GridGenerator.LAYOUT);
 
-        int range = 50;
+        if (gridLayout instanceof ClassicInfiniteLayout)
+        {
+            BingoFixMod.LOGGER.error("Infinite layout should in theory have the rooms, unless your generator is broken.");
+            return Collections.emptyList();
+        }
 
         if (!(gridLayout instanceof ClassicVaultLayout layout))
         {
@@ -53,6 +58,7 @@ public class Util
             return Collections.emptyList();
         }
 
+        final int range = 50;
         List<ResourceLocation> roomIDList = new ArrayList<>();
 
         // Start spiral search
